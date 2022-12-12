@@ -1,0 +1,11 @@
+.form {
+    border: 5px solid #1976d2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+}
+
+.btnMUI.MuiButtonBase-root {
+    margin-top: 20px;
+}
