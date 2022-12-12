@@ -2,6 +2,7 @@
     margin-left: 70px;
 }
 
-.components {
+.ListsUser {
     display: flex;
+    margin-bottom: 20px;
 }

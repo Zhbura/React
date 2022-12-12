@@ -1,9 +1,11 @@
-import { useState } from 'react';
-import { Button } from '../ui/Button';
-import './Form.css'
+import { useState, useEffect, useRef } from 'react';
+import './Form.css';
+import IButton from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 export function Form({ addMessage }) {
     const [text, setText] = useState('');
+    const textField = useRef();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -13,19 +15,28 @@ export function Form({ addMessage }) {
         });
         setText('');
     }
+
+    useEffect(() => {
+        textField.current?.focus()
+    }, []);
+
     return (
         <>
             <form
                 className="form"
                 onSubmit={handleSubmit}>
-                <input
-                    className="input__form"
+                <TextField
+                    id="outlined-basic"
+                    label="Message"
+                    variant="outlined"
+                    inputRef={textField}
                     type="text"
                     value={text}
-                    onChange={(e) => setText(e.target.value)}>
-
-                </input>
-                <Button type="submit">Add message</Button>
+                    onChange={(e) => setText(e.target.value)} />
+                <IButton
+                    type="submit"
+                    className="btnMUI"
+                    variant="contained">Add message</IButton>
             </form>
         </>
     )

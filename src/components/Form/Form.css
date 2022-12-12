@@ -1,11 +1,11 @@
 .form {
-    border: 5px solid rgb(113, 195, 233);
+    border: 5px solid #1976d2;
     padding: 20px;
     display: flex;
     flex-direction: column;
     max-width: 300px;
 }
 
-.input__form:hover {
-    border: 2px solid rgb(113, 195, 233);
+.btnMUI.MuiButtonBase-root {
+    margin-top: 20px;
 }

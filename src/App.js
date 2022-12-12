@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Form } from './components/Form/Form';
-import { MessageList } from './components/MessageList/MessageList.js';
+import { MessageList } from './components/MessageList/MessageList';
+import { ChatList } from './components/ChatList/ChatList';
 import './App.css';
 
 export function App() {
@@ -27,8 +28,11 @@ export function App() {
   return (
     <>
       <h1 className="heading_title">Welcome to chat!</h1>
-      <div className="components"><Form addMessage={addMessage} />
-        <MessageList messages={messages} /></div>
+      <div className="ListsUser">
+        <ChatList />
+        <MessageList messages={messages} />
+      </div>
+      <Form addMessage={addMessage} />
     </>
   )
 }
