@@ -1,8 +1,11 @@
-.ListsUser {
-    display: flex;
-    margin-bottom: 20px;
-}
-
 .heading_title {
     margin-left: 70px;
+}
+
+.chats_messages_block {
+    display: flex;
+}
+
+.messages_block {
+    margin-left: 40px;
 }

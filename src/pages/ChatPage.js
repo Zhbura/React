@@ -2,19 +2,18 @@ import { useState, useEffect } from 'react';
 import { Form } from '../components/Form/Form';
 import { MessageList } from '../components/MessageList/MessageList';
 import { ChatList } from '../components/ChatList/ChatList';
+import { useParams, Navigate } from 'react-router-dom';
 import './ChatPage.css';
 
-export function ChatPage() {
-    const [messages, setMessages] = useState([]);
-
-    const addMessage = (newMessage) => {
-        setMessages([...messages, newMessage]);
-    }
+export function ChatPage({ onAddChat, onAddMessage, messages, chats }) {
+    const { chatId } = useParams();
 
     useEffect(() => {
-        if (messages.length > 0 && messages[messages.length - 1].author === 'user') {
+        if (chatId &&
+            messages[chatId].length > 0 &&
+            messages[chatId][messages[chatId].length - 1].author === 'user') {
             const timeout = setTimeout(() => {
-                addMessage({
+                onAddMessage(chatId, {
                     author: 'bot',
                     text: 'Hello, I am Bot'
                 })
@@ -24,15 +23,30 @@ export function ChatPage() {
             }
         }
 
-    }, [messages])
+    }, [chatId, messages])
+
+    const handleAddMessage = (message) => {
+        if (chatId) {
+            onAddMessage(chatId, message)
+        }
+    }
+
+    if (chatId && !messages[chatId]) {
+        return <Navigate to="chats" replace />
+    }
+
     return (
         <>
-            <h1 className="heading_title">Welcome to chat!</h1>
-            <div className="ListsUser">
-                <ChatList />
-                <MessageList messages={messages} />
+            <h1 className="heading_title">Welcome to {chatId}!</h1>
+            <div className="chats_messages_block">
+            <ChatList chats={chats} onAddChat={onAddChat} />
+            <div className="messages_block">
+                <MessageList messages={chatId ? messages[chatId] : []} />
+                <Form addMessage={handleAddMessage} />
             </div>
-            <Form addMessage={addMessage} />
+            </div>
+            
+
         </>
     )
 }
