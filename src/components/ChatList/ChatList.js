@@ -5,12 +5,6 @@ import IButton from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import './ChatList.css';
 
-// const chats = [
-//     { name: 'Chat 1', id: 1 },
-//     { name: 'Chat 2', id: 2 },
-//     { name: 'Chat 3', id: 3 }
-// ];
-
 export function ChatList({ onAddChat, chats }) {
     const [value, setValue] = useState('');
 
@@ -26,6 +20,7 @@ export function ChatList({ onAddChat, chats }) {
             name: value
         })
     }
+
     return (
         <>
             <div className="mainChatList">
@@ -42,9 +37,9 @@ export function ChatList({ onAddChat, chats }) {
                     ))}
                 </ul>
 
-                <form 
-                className="form_chatList"
-                onSubmit={handleSubmit}>
+                <form
+                    className="form_chatList"
+                    onSubmit={handleSubmit}>
                     <TextField
                         id="outlined-basic"
                         label="New chat"

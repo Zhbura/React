@@ -5,7 +5,7 @@ import { ChatList } from '../components/ChatList/ChatList';
 import { useParams, Navigate } from 'react-router-dom';
 import './ChatPage.css';
 
-export function ChatPage({ onAddChat, onAddMessage, messages, chats }) {
+export function ChatPage({ onAddChat, onAddMessage, deleteChat, messages, chats }) {
     const { chatId } = useParams();
 
     useEffect(() => {
