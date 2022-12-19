@@ -6,6 +6,8 @@ import { MainPage } from './pages/MainPage'
 import { ProfilePage } from './pages/ProfilePage';
 import { ChatPage } from './pages/ChatPage';
 import { ChatList } from './components/ChatList/ChatList';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 const defaulMessages = {
   User_chat: [
@@ -37,23 +39,25 @@ export function App() {
 
   return (
     <>
-      <Routes>
-        <Route path='/' element={<Header />}>
-          <Route index element={<MainPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="chats">
-            <Route index element={<ChatList onAddChat={onAddChat} chats={chats} />} />
-            <Route path=":chatId"
-              element={<ChatPage chats={chats}
-                messages={messages}
-                onAddChat={onAddChat}
-                onAddMessage={onAddMessage}
-              />}
-            />
+      <Provider store={store}>
+        <Routes>
+          <Route path='/' element={<Header />}>
+            <Route index element={<MainPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="chats">
+              <Route index element={<ChatList onAddChat={onAddChat} chats={chats} />} />
+              <Route path=":chatId"
+                element={<ChatPage chats={chats}
+                  messages={messages}
+                  onAddChat={onAddChat}
+                  onAddMessage={onAddMessage}
+                />}
+              />
+            </Route>
           </Route>
-        </Route>
-        <Route path="*" element={<h1>ERROR 404, PAGE NOT FOUND</h1>}></Route>
-      </Routes>
+          <Route path="*" element={<h1>ERROR 404, PAGE NOT FOUND</h1>}></Route>
+        </Routes>
+      </Provider>
     </>
   )
 }
