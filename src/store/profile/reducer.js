@@ -1,7 +1,8 @@
 import * as types from './types';
 
 const initialState = {
-    name: 'Sasha'
+    name: 'Sasha',
+    showName: true
 }
 
 export const profileReducer = (state = initialState, action) => {
@@ -12,7 +13,12 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 name: payload
             }
-
+            case types.CHANGE_SHOW_NAME: {
+                return {
+                  ...state,
+                  showName: !state.showName,
+                }
+            }
         default:
             return state
     }

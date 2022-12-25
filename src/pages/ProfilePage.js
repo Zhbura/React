@@ -1,21 +1,25 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import * as types from '../store/profile/types'
+// import * as types from '../store/profile/types';
+import { changeName } from '../store/profile/actions';
 
 export function ProfilePage() {
-    const name = useSelector((store) => store.name);
+    const [showName, setShowName] = useState(true);
+
+    const { name } = useSelector((store) => store);
     const [value, setValue] = useState('');
     const dispatch = useDispatch();
 
     const handleChange = () => {
-        dispatch({ type: types.CHANGE_NAME, payload: value });
+
+        dispatch(changeName(value));
         setValue('');
     }
 
     return (
         <>
             <h1>Profile page</h1>
-            <h2>{name}</h2>
+            {showName && <h2>{name}</h2>}
             <input
                 type="text"
                 value={value}
@@ -24,6 +28,18 @@ export function ProfilePage() {
             <button
                 onClick={handleChange}
             >Change name</button>
+            <div>
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={!showName}
+                        onChange={() => setShowName(!showName)}
+                    />
+                    {showName ? 'Скрыть имя' : 'Показать имя'}
+                </label>
+            </div>
+
+
         </>
     )
 }
