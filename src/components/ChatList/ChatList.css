@@ -19,3 +19,29 @@ ul {
 .form_chatList button.MuiButtonBase-root {
     margin-top: 20px;
 }
+
+.chats_messages_block {
+    display: flex;
+}
+
+.borderChatList {
+    border: 5px solid #1976d2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+}
+
+.heading_title {
+    color: blue;
+}
+
+.chatItem {
+    display: flex;
+    font-size: 30px;
+    margin-top: 5px;
+}
+
+.deleteButton {
+    margin-left: 10px;
+}

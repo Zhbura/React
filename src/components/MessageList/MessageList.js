@@ -1,11 +1,14 @@
-export function MessageList({ messages }) {
+import { Message } from '../Message/Message';
+import './MessageList.css'
+
+export const MessageList = ({ messages }) => {
     return (
         <>
-            <ul>
-                {messages.map((msg, idx) => (
-                    <li key={idx + 1}>{msg.text}</li>
+            <div className="message">
+                {messages.map((message) => (
+                    <Message author={message.author} key={message.id} message={message.message} />
                 ))}
-            </ul>
+            </div>
         </>
     )
 }

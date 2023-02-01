@@ -1,11 +1,17 @@
 .form {
-    border: 5px solid #1976d2;
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    max-width: 300px;
 }
 
-.btnMUI.MuiButtonBase-root {
+.inputSubmit {
     margin-top: 20px;
+    background-color: rgb(194, 198, 236);
+    padding: 5px;
+    color: blue;
+    border-color: blue;
+}
+
+.inputSubmit:hover {
+    color: white;
+    background-color: red;
 }

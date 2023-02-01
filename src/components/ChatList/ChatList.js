@@ -1,58 +1,35 @@
+import { Outlet } from "react-router-dom";
+import { Form } from "../Form/Form";
+import { ChatItem } from "./ChatItem";
+import { useSelector, useDispatch } from 'react-redux';
+import { addChat, deleteChat } from '../../store/chats/actions';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import IButton from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import { selectChats } from '../../store/chats/selectors';
 import './ChatList.css';
 
-export function ChatList({ onAddChat, chats }) {
-    const [value, setValue] = useState('');
+export const ChatList = () => {
+    const chats = useSelector(selectChats);
+    const dispatch = useDispatch();
 
-    const handleChange = (e) => {
-        setValue(e.target.value)
+    const handleAddChat = (newChatName) => {
+        const newId = nanoid();
+        dispatch(addChat(newId, newChatName));
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        setValue('')
-        onAddChat({
-            id: nanoid(),
-            name: value
-        })
+    const handleDeleteChat = (idToDelete) => {
+        dispatch(deleteChat(idToDelete));
     }
-
     return (
         <>
-            <div className="mainChatList">
-                <ul>
+            <h1 className="heading_title">Чтобы начать общение - создай чат!</h1>
+            <div className="chats_messages_block">
+                <div className="borderChatList">
                     {chats.map((chat) => (
-                        <li key={chat.id}>
-                            <NavLink to={`/chats/${chat.name}`}
-                                style={({ isActive }) => ({
-                                    color: isActive ? 'red' : 'blue'
-                                })}>
-                                {chat.name}
-                            </NavLink>
-                        </li>
+                        <ChatItem key={chat.id} chat={chat} onDeleteChat={handleDeleteChat} />
                     ))}
-                </ul>
-
-                <form
-                    className="form_chatList"
-                    onSubmit={handleSubmit}>
-                    <TextField
-                        id="outlined-basic"
-                        label="New chat"
-                        variant="outlined"
-                        type="text"
-                        value={value}
-                        onChange={handleChange}
-                    />
-                    <IButton
-                        type="submit"
-                        variant="contained">
-                        Create new chat</IButton>
-                </form>
+                    <Form onSubmit={handleAddChat} buttonValue={'Создать чат'} />
+                </div>
+                <Outlet />
             </div>
         </>
     )
