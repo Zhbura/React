@@ -5,7 +5,7 @@ import { AUTHOR } from "../utils/constants";
 import { MessageList } from "../MessageList/MessageList";
 import { Navigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addMessages } from '../../store/messages/actions';
+import { addMessagesWithThunk } from '../../store/messages/actions';
 import { selectMessages } from '../../store/messages/selectors';
 import './ChatPage.css';
 
@@ -26,18 +26,18 @@ export const Chat = () => {
             author,
             id: nanoid(),
         }
-        dispatch(addMessages(chatId, newMsg));
+        dispatch(addMessagesWithThunk(chatId, newMsg));
     }
 
     useEffect(() => {
-        let timeout;
+        // let timeout;
 
-        if (messages[chatId]?.[messages[chatId]?.length - 1]?.author === AUTHOR.ME) {
-            timeout = setTimeout(() => {
-                sendMessage('I am Bot', AUTHOR.BOT)
-            }, 1000)
-        }
-        return () => clearTimeout(timeout)
+        // if (messages[chatId]?.[messages[chatId]?.length - 1]?.author === AUTHOR.ME) {
+        //     timeout = setTimeout(() => {
+        //         sendMessage('I am Bot', AUTHOR.BOT)
+        //     }, 1000)
+        // }
+        // return () => clearTimeout(timeout)
     }, [messages])
 
     if (!messages[chatId]) {

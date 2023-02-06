@@ -1,4 +1,4 @@
-import { CHANGE_SHOW_NAME, CHANGE_NAME } from './actions';
+import { CHANGE_SHOW_NAME, CHANGE_NAME } from "./actions";
 
 const initialState = {
     showName: true,

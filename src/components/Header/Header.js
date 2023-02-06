@@ -1,24 +1,27 @@
-import { Outlet, NavLink } from 'react-router-dom';
-import './Header.css';
+import { NavLink, Outlet } from "react-router-dom";
+import "./Header.css";
 
-export const navigate = [
+const navigate = [
     {
         id: 1,
+        to: '/',
         name: 'Main',
-        to: '/'
     },
     {
         id: 2,
+        to: '/profile',
         name: 'Profile',
-        to: '/profile'
     },
     {
         id: 3,
-        name: 'Chat',
-        to: '/chats'
-    }
-]
-export function Header() {
+        to: '/chats',
+        name: 'Chats',
+    },
+];
+
+export const Header = () => {
+
+
     return (
         <>
             <header>

@@ -1,7 +1,7 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { changeShowName, changeName } from '../../store/profile/actions';
-import { useState } from 'react';
-import { selectName, selectShowName } from '../../store/profile/selectors';
+import { useSelector, useDispatch } from "react-redux";
+import { changeShowName, changeName } from "../../store/profile/actions";
+import { useState } from "react";
+import { selectName, selectShowName } from "../../store/profile/selectors";
 
 export const Profile = () => {
     const name = useSelector(selectName);
