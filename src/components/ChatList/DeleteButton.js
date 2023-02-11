@@ -5,5 +5,5 @@ export const DeleteButton = ({ id, onClick }) => {
         onClick(id);
     }, [onClick, id]);
 
-    return <div className="deleteButton" onClick={handleClick}>&#10060;</div>;
+    return <button className="deleteButton" onClick={handleClick}>x</button>;
 };

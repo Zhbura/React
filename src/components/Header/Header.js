@@ -17,6 +17,11 @@ const navigate = [
         to: '/chats',
         name: 'Chats',
     },
+    {
+        id: 4,
+        to: '/laureates',
+        name: 'Laureates',
+    },
 ];
 
 export const Header = () => {

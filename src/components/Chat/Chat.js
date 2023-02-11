@@ -1,13 +1,12 @@
-import { useEffect } from "react";
 import { Form } from "../Form/Form";
-import { nanoid } from 'nanoid';
+import { nanoid } from "nanoid";
 import { AUTHOR } from "../utils/constants";
 import { MessageList } from "../MessageList/MessageList";
 import { Navigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addMessagesWithThunk } from '../../store/messages/actions';
-import { selectMessages } from '../../store/messages/selectors';
-import './ChatPage.css';
+import { addMessagesWithThunk } from "../../store/messages/actions";
+import { selectMessages } from "../../store/messages/selectors";
+import "./ChatPage.css";
 
 export const Chat = () => {
     const messages = useSelector(selectMessages);
@@ -28,17 +27,6 @@ export const Chat = () => {
         }
         dispatch(addMessagesWithThunk(chatId, newMsg));
     }
-
-    useEffect(() => {
-        // let timeout;
-
-        // if (messages[chatId]?.[messages[chatId]?.length - 1]?.author === AUTHOR.ME) {
-        //     timeout = setTimeout(() => {
-        //         sendMessage('I am Bot', AUTHOR.BOT)
-        //     }, 1000)
-        // }
-        // return () => clearTimeout(timeout)
-    }, [messages])
 
     if (!messages[chatId]) {
         return <Navigate to="/chats" replace />

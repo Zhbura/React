@@ -4,6 +4,7 @@ import { Header } from "./components/Header/Header";
 import { MainPage } from "./components/MainPage/MainPage";
 import { Profile } from "./components/Profile/Profile";
 import { ChatList } from "./components/ChatList/ChatList";
+import { Laureates } from "./components/Laureates/Laureates";
 import { Chat } from "./components/Chat/Chat";
 import { store, persistor } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
@@ -16,6 +17,7 @@ export const App = () => {
           <Routes>
             <Route path='/' element={<Header />}>
               <Route index element={<MainPage />} />
+              <Route path="laureates" element={<Laureates />} />
               <Route path="profile" element={<Profile />} />
               <Route path="chats" element={<ChatList />}>
                 <Route path=":chatId" element={<Chat />} />
