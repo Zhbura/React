@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeShowName, changeName } from "../../store/profile/actions";
 import { useState } from "react";
 import { selectName, selectShowName } from "../../store/profile/selectors";
+import { logOut } from "../../servises/firebase";
 
 export const Profile = () => {
     const name = useSelector(selectName);
@@ -17,9 +18,19 @@ export const Profile = () => {
     const handleChangeName = () => {
         dispatch(changeName(value))
     }
+
+    const handleLogOut = async () => {
+        try {
+            await logOut();
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    
     return (
         <>
             <h1>Profile page</h1>
+            <button onClick={handleLogOut}>logOut</button>
             {showName && <h1>{name}</h1>}
             <label>
                 <input

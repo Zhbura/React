@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-
 import { DeleteButton } from "./DeleteButton";
 
 export const ChatItem = ({ chat, onDeleteChat }) => (
