@@ -1,22 +1,22 @@
 import { useSelector, useDispatch } from "react-redux";
 import { changeShowName, changeName } from "../../store/profile/actions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { selectName, selectShowName } from "../../store/profile/selectors";
-import { logOut } from "../../servises/firebase";
+import { auth, getProfileNameRef, getProfileRefShowName, logOut } from "../../servises/firebase";
+import { set, onValue } from "firebase/database";
 
 export const Profile = () => {
-    const name = useSelector(selectName);
-    const showName = useSelector(selectShowName);
-
-    const dispatch = useDispatch();
+    const [value, setValue] = useState('');
+    const [name, setName] = useState('');
+    const [showName, setShowName] = useState(false);
 
     const handleChangeShowName = () => {
-        dispatch(changeShowName)
+        set(getProfileRefShowName, !showName)
     }
 
-    const [value, setValue] = useState('');
     const handleChangeName = () => {
-        dispatch(changeName(value))
+        // записываем имя в б/д profile
+        set(getProfileNameRef(auth.currentUser.uid), value)
     }
 
     const handleLogOut = async () => {
@@ -26,7 +26,25 @@ export const Profile = () => {
             console.log(err)
         }
     }
-    
+
+    // отображаем данные на странице
+
+    useEffect(() => {
+        // создаем объект для хранения в б/д
+        const unsubscribeName = onValue(getProfileNameRef(auth.currentUser.uid), (snapshot) => {
+            setName(snapshot.val())
+        })
+
+        const unsubscribeShowName = onValue(getProfileRefShowName, (snapshot) => {
+            setShowName(snapshot.val())
+        })
+
+        return () => {
+            unsubscribeName();
+            unsubscribeShowName();
+        }
+
+    }, [])
     return (
         <>
             <h1>Profile page</h1>

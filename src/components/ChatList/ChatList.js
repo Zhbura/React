@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { Form } from "../Form/Form";
 import { ChatItem } from "./ChatItem";
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,18 +6,43 @@ import { addChat, deleteChat } from '../../store/chats/actions';
 import { nanoid } from 'nanoid';
 import { selectChats } from '../../store/chats/selectors';
 import './ChatList.css';
+import { getChatsRef, getChatsByIdRef, getMessagesRefByChatId, getMessageListRefByChatId } from "../../servises/firebase";
+import { useEffect, useState } from "react";
+import { onValue, set, remove, onChildRemoved, onChildAdded } from "firebase/database";
 
 export const ChatList = () => {
-    const chats = useSelector(selectChats);
-    const dispatch = useDispatch();
+    // const chats = useSelector(selectChats);
+    const [chats, setChats] = useState([]);
+
+    useEffect(() => {
+        const unsubscribe = onValue(getChatsRef, (snapshot) => {
+            const newChats = [];
+            snapshot.forEach((child) => {
+                newChats.push(child.val())
+            })
+            setChats(newChats);
+        })
+
+        return unsubscribe;
+    }, [])
+
+    // const dispatch = useDispatch();
 
     const handleAddChat = (newChatName) => {
         const newId = nanoid();
-        dispatch(addChat(newId, newChatName));
+        // dispatch(addChat(newId, newChatName));
+
+        set(getChatsByIdRef(newId), { id: newId, name: newChatName });
+        set(getMessagesRefByChatId(newId), { empty: true });
     }
 
-    const handleDeleteChat = (idToDelete) => {
-        dispatch(deleteChat(idToDelete));
+    const handleDeleteChat = (id) => {
+        // dispatch(deleteChat(idToDelete));
+
+        // удаление чатов (2 способа):
+        // remove(getChatsByIdRef(id))
+        set(getChatsByIdRef(id), null);
+        set(getMessagesRefByChatId(id), null);
     }
     return (
         <>

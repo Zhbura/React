@@ -6,6 +6,7 @@ import {
     signInWithEmailAndPassword,
     signOut,
 } from "firebase/auth";
+import { getDatabase, ref } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -31,3 +32,22 @@ export const login = (email, pass) =>
     signInWithEmailAndPassword(auth, email, pass);
 
 export const logOut = () => signOut(auth);
+
+export const db = getDatabase(app);
+
+export const getProfileNameRef = (userId) => ref(db, `profile/${userId}/name`);
+export const getProfileRefShowName = ref(db, "profile/ShowName");
+
+export const getChatsRef = ref(db, "chats"); // ссылка на все чаты
+export const getChatsByIdRef = (chatId) => ref(db, `chats/${chatId}`); // ссылка на отдельный чат 
+
+export const messagesRef = ref(db, "messages"); // ссылка на все сообщения
+
+export const getMessagesRefByChatId = (chatId) => ref(db, `messages/${chatId}`);
+
+export const getMessageListRefByChatId = (chatId) => ref(db, `messages/${chatId}/messageList`); // ссылка на сообщения чата айди 
+
+// export const getMessageRefById = (chatId, msgId) => ref(db, `messages/${chatId}/messageList/${msgId}`);
+
+export const getMessageRefById = (chatId, msgId) => ref(db, `messages/${chatId}/messageList/${msgId}`)
+

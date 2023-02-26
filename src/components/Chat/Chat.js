@@ -7,13 +7,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { addMessagesWithThunk } from "../../store/messages/actions";
 import { selectMessages } from "../../store/messages/selectors";
 import "./ChatPage.css";
+import { useEffect, useState } from "react";
+import { onChildRemoved, onValue, set } from "firebase/database";
+import { getMessageListRefByChatId, getMessagesRefByChatId, getMessageRefById } from "../../servises/firebase";
 
 export const Chat = () => {
-    const messages = useSelector(selectMessages);
-    const dispatch = useDispatch();
+    const [messages, setMessages] = useState([]);
+    // const messages = useSelector(selectMessages);
+    // const dispatch = useDispatch();
 
-    const params = useParams();
-    const { chatId } = params;
+    const { chatId } = useParams();
 
     const handleAddMessage = (message) => {
         sendMessage(message, AUTHOR.ME)
@@ -23,12 +26,45 @@ export const Chat = () => {
         const newMsg = {
             message,
             author,
-            id: nanoid(),
+            id: nanoid()
         }
-        dispatch(addMessagesWithThunk(chatId, newMsg));
+        // dispatch(addMessagesWithThunk(chatId, newMsg));
+
+        set(getMessageRefById(chatId, newMsg.id), newMsg);
     }
 
-    if (!messages[chatId]) {
+    useEffect(() => {
+        const unsubscribe = onValue(getMessagesRefByChatId(chatId), (snapshot) => {
+            if (!snapshot.val()?.empty) {
+                setMessages(null);
+            }
+        })
+        return unsubscribe;
+    }, [chatId])
+
+    useEffect(() => {
+        const unsubscribe = onValue(getMessageListRefByChatId(chatId), (snapshot) => {
+            const newMessages = [];
+            snapshot.forEach((message) => {
+                newMessages.push(message.val())
+            })
+            setMessages(newMessages)
+        })
+
+        return unsubscribe;
+    }, [chatId])
+
+    useEffect(() => {
+        const unsubscribe = onChildRemoved(getMessageListRefByChatId(chatId),
+            (snapshot) => {
+                setMessages((prevMessages) =>
+                    prevMessages.filter(({ id }) => id !== snapshot.val()?.id))
+            })
+
+        return unsubscribe;
+    }, [chatId])
+
+    if (!messages) {
         return <Navigate to="/chats" replace />
     }
 
@@ -36,7 +72,7 @@ export const Chat = () => {
         <>
             <h1 className="heading_title">Welcome to chat!</h1>
             <div className="messages_block">
-                <MessageList messages={messages[chatId]} />
+                <MessageList messages={messages} />
                 <Form onSubmit={handleAddMessage} buttonValue={'Отправить сообщение'} />
             </div>
         </>

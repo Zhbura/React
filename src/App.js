@@ -42,11 +42,14 @@ export const App = () => {
               <Route path="profile" element={<PrivateRoute authed={authed} />}>
                 <Route index element={<Profile />} />
               </Route>
-              <Route path="chats" element={<PrivateRoute authed={authed} />}>
+              <Route path="chats" element={<ChatList />}>
+                <Route path=":chatId" element={<Chat />} />
+              </Route>
+              {/* <Route path="chats" element={<PrivateRoute authed={authed} />}>
                 <Route path="" element={<ChatList />}>
                   <Route path=":chatId" element={<Chat />} />
                 </Route>
-              </Route>
+              </Route> */}
             </Route>
             <Route path="*" element={<h1>ERROR 404, PAGE NOT FOUND</h1>}></Route>
           </Routes>
