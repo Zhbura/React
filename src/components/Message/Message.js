@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getProfileNameRef } from "../../servises/firebase";
 import { auth } from "../../servises/firebase";
 
-export const Message = ({ message, id }) => {
+export const Message = ({ message }) => {
     const [author, setAuthor] = useState('');
 
     useEffect(() => {

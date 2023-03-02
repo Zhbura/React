@@ -23,7 +23,7 @@ export const MessageList = ({ messages }) => {
             <div className="message">
                 {messages.map((message) => (
                     <div key={message.id} className="message-block">
-                        <Message message={message.message} id={message.id} />
+                        <Message message={message.message} />
                         <button onClick={() => handleDelete(message.id)} >x</button>
                     </div>
                 ))}
