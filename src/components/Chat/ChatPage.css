@@ -1,0 +1,11 @@
+.heading_title {
+    margin-left: 70px;
+    color: blue;
+}
+
+.messages_block {
+    margin-left: 40px;
+    border: 5px solid #1976d2;
+    padding: 20px;
+    max-width: 300px;
+}
